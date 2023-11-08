@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
-
+import "./Stopwatch.css"
 const Stopwatch = () => {
-    const [time,setTime]=useState(30000)
+    const [time,setTime]=useState(300)
     const [isActive,setIsActive]=useState(false);
 
     useEffect(()=>{
@@ -35,15 +35,26 @@ const Stopwatch = () => {
         setTime(0);
     }
 
+    const formatTime=()=>{
+        const hours=Math.floor(time/3600).toString().padStart(2,'0');
+        const minutes=Math.floor((time%3600)/60).toString().padStart(2,'0');
+        const seconds=(time%60).toString().padStart(2,'0');
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
 
   return (
-    <div>
+    <div className="timer">
         <h1>Stopwatch</h1>
-        <p>{time}</p>
-        <button onClick={handleStart}>Start</button>
-        <button onClick={handlePauseResume}>Pause/Resume</button>
-        <button onClick={handleStop}>Stop</button>
-      
+        <p >{formatTime(time)}</p>
+        <div className="buttons">
+        <button className="button1" onClick={handleStart}>Start</button>
+        <button className="button1" onClick={handlePauseResume}>
+            {isActive? 'Pause' : 'Resume'}
+            </button>
+        <button className="button1" onClick={handleStop}>Stop</button>
+        <button className="button1" onClick={()=>setTime(300)}>Reset</button>
+        </div>
     </div>
   );
 }
