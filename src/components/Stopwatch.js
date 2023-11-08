@@ -2,7 +2,7 @@ import React,{useState,useEffect} from "react";
 
 const Stopwatch = () => {
     const [time,setTime]=useState(30000)
-    const [isActive,setActive]=useState(false);
+    const [isActive,setIsActive]=useState(false);
 
     useEffect(()=>{
         let interval;
@@ -13,7 +13,7 @@ const Stopwatch = () => {
                         return time-1;
                     }
                     else{
-                        setActive(false);
+                        setIsActive(false);
                         return 0;
                     }
                 });
@@ -22,14 +22,27 @@ const Stopwatch = () => {
         return ()=> clearInterval(interval);
     },[isActive]);
 
+    const handleStart=()=>{
+        setIsActive(true);
+    }
+
+    const handlePauseResume=()=>{
+        setIsActive((prev)=>!prev);
+    }
+
+    const handleStop=()=>{
+        setIsActive(false);
+        setTime(0);
+    }
+
 
   return (
     <div>
         <h1>Stopwatch</h1>
         <p>{time}</p>
-        <button>Start</button>
-        <button>Pause/Resume</button>
-        <button>Stop</button>
+        <button onClick={handleStart}>Start</button>
+        <button onClick={handlePauseResume}>Pause/Resume</button>
+        <button onClick={handleStop}>Stop</button>
       
     </div>
   );
